@@ -1,7 +1,5 @@
 import { FormHelperText, FormLabel, Select } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
-const ITEM_HEIGHT = 20;
-const ITEM_PADDING_TOP = 8;
 export const CustomSelect = (props: {
   name: string;
   label: string;
@@ -17,26 +15,20 @@ export const CustomSelect = (props: {
         render={({ field: { onChange, value }, fieldState: { error } }) => (
           <>
             <Select
-            sx={{height:40,width:'100%'}}
+              placeholder={"Please Select " + props.label}
+              sx={{ height: 40 }}
+              fullWidth
               value={value || ""}
-            //   fullWidth
               onChange={(v) => {
-                onChange(v);
+                onChange(v.target.value);
               }}
               error={!!error}
-            //   MenuProps={{
-            //     PaperProps: {
-            //       style: {
-            //         maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            //         top: 10,
-            //       },
-            //     },
-            //   }}
             >
+              
               {props.children}
             </Select>
             {!!error && (
-              <FormHelperText color='red'  error>
+              <FormHelperText color="red" error>
                 {error?.message}
               </FormHelperText>
             )}

@@ -1,7 +1,7 @@
 import { FormLabel, TextField } from "@mui/material";
 import * as React from "react";
 import { Controller, useFormContext} from "react-hook-form";
-export const CustomTextField = (props: { name: string; label: string }) => {
+export const CustomTextField = (props: { name: string; label?: string; }) => {
   const { control } = useFormContext();
   return (
     <>
@@ -11,6 +11,7 @@ export const CustomTextField = (props: { name: string; label: string }) => {
         control={control}
         render={({ field, fieldState: { error } }) => (
           <TextField
+          placeholder={"Please Enter "+props.label}
             variant="outlined"
             size="small"
             fullWidth
