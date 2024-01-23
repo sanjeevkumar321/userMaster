@@ -116,8 +116,7 @@ const validationSchema = [
   }),
 ];
 
-export type RootState = ReturnType<typeof store.getState>
-
+export type RootState = ReturnType<typeof store.getState>;
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -134,13 +133,12 @@ export default function Home() {
 
   const { handleSubmit, reset, trigger } = methods;
 
-  const onSubmit: SubmitHandler<User> = (data:User) =>{
-    if(dispatch(NewUser(data))){
-      Swal.fire("Successfully Added","","success");
+  const onSubmit: SubmitHandler<User> = (data: User) => {
+
+    if (dispatch(NewUser(data))) {
+      Swal.fire("Successfully Added", "", "success");
       handleReset();
     }
-
-    
   };
 
   const handleNext = async () => {
@@ -159,57 +157,68 @@ export default function Home() {
 
   return (
     <>
-    <Box sx={{ width: "100%" }}>
-      <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => {
-          const stepProps: { completed?: boolean } = {};
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
+      <Grid container justifyContent={"center"}>
+        <Grid  item xs={8}>
+          <Box sx={{ width: "100%" }}>
+            <Stepper activeStep={activeStep}>
+              {steps.map((label, index) => {
+                const stepProps: { completed?: boolean } = {};
+                return (
+                  <Step key={label} {...stepProps}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                );
+              })}
+            </Stepper>
 
-      <React.Fragment>
-        <>
-          <Box sx={{ display: "flex", flexDirection: "row" }} p={5}>
-            <FormProvider {...methods}>
-              <form style={{ width: "100%" }}>
-                {activeStep === 0 && <PersonalDetailsForm />}
-                {activeStep === 1 && <AddressDetailsForm />}
-                <Grid container justifyContent={"space-between"} marginTop={5}>
-                  <Button
-                    variant="contained"
-                    color="inherit"
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
-                    sx={{ mr: 1 }}
-                  >
-                    Back
-                  </Button>
-                  {activeStep === steps.length - 1 ? (
-                    <Button
-                      onClick={handleSubmit(onSubmit)}
-                      variant="contained"
-                    >
-                      Submit
-                    </Button>
-                  ) : (
-                    <Button onClick={handleNext} variant="contained">
-                      Next
-                    </Button>
-                  )}
-                </Grid>
-              </form>
-            </FormProvider>
+            <React.Fragment>
+              <>
+                <Box sx={{ display: "flex", flexDirection: "row" }} p={5}>
+                  <FormProvider {...methods}>
+                    <form style={{ width: "100%" }}>
+                      {activeStep === 0 && <PersonalDetailsForm />}
+                      {activeStep === 1 && <AddressDetailsForm />}
+                      <Grid
+                        container
+                        justifyContent={"space-between"}
+                        marginTop={5}
+                      >
+                        <Button
+                          variant="contained"
+                          color="inherit"
+                          disabled={activeStep === 0}
+                          onClick={handleBack}
+                          sx={{ mr: 1 }}
+                        >
+                          Back
+                        </Button>
+                        {activeStep === steps.length - 1 ? (
+                          <Button
+                            onClick={handleSubmit(onSubmit)}
+                            variant="contained"
+                          >
+                            Submit
+                          </Button>
+                        ) : (
+                          <Button onClick={handleNext} variant="contained">
+                            Next
+                          </Button>
+                        )}
+                      </Grid>
+                    </form>
+                  </FormProvider>
+                </Box>
+              </>
+            </React.Fragment>
           </Box>
-        </>
-      </React.Fragment>
-    </Box>
-    <Box>
-      <UserTable/>
-    </Box>
+        </Grid>
+
+        <Grid item xs={12}> 
+          <Box>
+            <UserTable />
+          </Box>
+        </Grid>
+      </Grid>
     </>
   );
 }
